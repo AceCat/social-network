@@ -97,4 +97,18 @@ submitButton.click(function(){
 	})
 })
 
+// addFriendButton.click(function(){
+// 	console.log('clicked')
+// 	var pageUrl = document.URL; // Get current url
+// 	var urlArray = pageUrl.split('/') // Split the string into an array with / as separator
+// 	var urlId = urlArray[urlArray.length-1];
+// 	$.ajax({
+// 		method: "PATCH",
+// 		url: "http://localhost:3000/users/edit/" + urlId,
+// 		data: urlId,
+// 		success: function(response){
+// 			response.json()
 
+// 		}
+// 	})
+// })

@@ -15,7 +15,6 @@ app.use(session({
 	require('./db/db.js')
 	var UsersController = require('./controllers/UsersController.js')
 	var PostController = require('./controllers/PostController.js')
-	var FriendsController = require('./controllers/FriendController.js')
 
 	// var ProfilesController = require('./controllers/ProfilesController.js')
 
@@ -25,7 +24,6 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/profiles', ProfilesController);
-app.use('/friends', FriendsController);
 app.use('/users', UsersController);
 app.use('/posts', PostController);
 

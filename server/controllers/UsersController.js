@@ -50,7 +50,7 @@ router.get('/:id', function(request, response) {
   //   var postAuthor = user.profile.firstName + user.profile.lastName;
   // })
 
-  User.findById(id).populate('posts').exec(function(err, user){
+  User.findById(id).populate('posts').populate('friends').exec(function(err, user){
     var pageLoad = {
       ownPage: onOwnPage,
       user: user,
@@ -115,5 +115,18 @@ router.patch('/edit/:id', function(request, response){
     response.send(id);
   })
 })
+
+//This adds a new friend ID to the friend array
+router.post('/friends/:id', function(request, response){
+  var activeUserId = request.params.id;
+  // var newFriendId = request.body.friendId;
+  // console.log(newFriendId);
+  User.findById(activeUserId, function(error, user) {
+    var friendId = request.body.friendId;
+    user.friends.push(friendId);
+    user.save();
+    response.json(user);
+  })
+});
 
 module.exports = router;

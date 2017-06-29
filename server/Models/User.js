@@ -4,7 +4,7 @@ var UserSchema = new mongoose.Schema({
 	email: String,
 	password: String,
 	posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
-	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', friendName: String}],
 	profile: {
 		firstName: String,
 		lastName: String,

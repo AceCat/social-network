@@ -3,9 +3,10 @@
 {{/if}}
 <img src="{{user.profile.image}}"/>
 {{#unless ownPage}}
-	<form action='/friends/{{session.sessionId}}' method='PATCH'>
+	<form action='/users/friends/{{session.sessionId}}' method='POST'>
 		<input name='friendId' value='{{user.id}}'>
-	<button id='#addFriend'>Add Friend</button>
+	<button>Add Friend</button>
+	</form>
 {{/unless}}
 <h2 id='profileName'>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
 <h3>{{user.profile.title}}</h3>
@@ -28,11 +29,21 @@
 	<button>Write</button>
 </form>
 
+<h2>Put another brick in THE WALL</h2>
 <ul>
 {{#each user.posts}}
 	<li>
-	<h2><a href='/users/{{this.authorId}}'>{{this.author}}</a></h2>
+	<h4><a href='/users/{{this.authorId}}'>{{this.author}}</a></h4>
 	<p>{{this.message}}</p>
 	</li>
 {{/each}}
 </ul>
+
+<h2>Yo dawg here's your friends</h2>
+<ol>
+{{#each user.friends}}
+
+	<li>
+	<a href='/users/{{this.id}}'>{{this.profile.firstName}} {{this.profile.lastName}}</a>
+	</li>
+{{/each}}
