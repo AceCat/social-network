@@ -1,0 +1,38 @@
+{{#if ownPage}}
+	<a href="/users/edit/{{user.id}}">Edit Profile</a>
+{{/if}}
+<img src="{{user.profile.image}}"/>
+{{#unless ownPage}}
+	<form action='/friends/{{session.sessionId}}' method='PATCH'>
+		<input name='friendId' value='{{user.id}}'>
+	<button id='#addFriend'>Add Friend</button>
+{{/unless}}
+<h2 id='profileName'>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
+<h3>{{user.profile.title}}</h3>
+<h3>{{user.profile.affiliation}}</h3>
+<br />
+
+<h3>Interests</h3>
+	<ul>
+		{{#each user.profile.interests}}
+		<li>{{this}}</li>
+		{{/each}}
+	</ul>
+
+<h3>Write on this wall</h3>
+<form action='/posts' method='POST'>
+	<input name='message'>
+	<input name='userId' value='{{user.id}}' hidden>
+	<input name='author' value='{{session.userName}}' hidden>
+	<input name='authorId' value='{{session.sessionId}}'>
+	<button>Write</button>
+</form>
+
+<ul>
+{{#each user.posts}}
+	<li>
+	<h2><a href='/users/{{this.authorId}}'>{{this.author}}</a></h2>
+	<p>{{this.message}}</p>
+	</li>
+{{/each}}
+</ul>
