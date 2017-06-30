@@ -20,7 +20,17 @@
     {{/if}}
     {{#unless session.loggedIn}}
    		<ul class="nav navbar-nav navbar-right">
-   			<li><a href="/users/register">Register</a></li>
+   		   	<li><a href="/users/register">Register</a></li>
+
+   		<li>
+   			<form class="navbar-form navbar-right" action='/users/login' method='POST'>
+   			<div  class='form-group'>
+				<input class='form-control' name="email" placeholder='Email'>
+				<input class='form-control' name='password' placeholder='Password'>
+			</div>
+			<button class='btn-success'>Submit</button>
+			</form>
+		</li>
     	</ul>
 
     {{/unless}}

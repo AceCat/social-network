@@ -21,7 +21,13 @@ router.get('/register', function(request, response) {
 })
 
 router.get('/edit/:id', function(request, response) {
-  response.render('edit', request.session)
+  var id = request.params.id;
+  User.findById(id, function(err, user){
+    var sendOver = {user: user, session: request.session}
+    console.log(sendOver);
+    response.render('edit', sendOver)
+
+  })
 })
 
 
@@ -36,7 +42,7 @@ router.get('/', function(request, response){
 router.get('/logout', function(request, response) {
   console.log('working')
   request.session.loggedIn = false;
-  response.redirect('/users/login');
+  response.redirect('/users/');
 })
 
 router.get('/:id', function(request, response) {

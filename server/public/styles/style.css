@@ -31,6 +31,10 @@ li {
 	width: 100px;
 }
 
-.btn-success {
-	margin-top: 5px;
+.editField {
+	display: block;
+}
+
+.editMargin {
+	margin-left: 3%;
 }
