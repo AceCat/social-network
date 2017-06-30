@@ -27,7 +27,9 @@ router.get('/edit/:id', function(request, response) {
 
 router.get('/', function(request, response){
   User.find(function(error, users) {
-    response.json(users)
+      var session = request.session;
+      var allUsers = {allUsers: users, session: session};
+    response.render('allUsers', allUsers);
   })
 });
 
@@ -45,11 +47,7 @@ router.get('/:id', function(request, response) {
   } else {
     onOwnPage = false
   }
-
-  // User.findById(authorId, function(err, user) {
-  //   var postAuthor = user.profile.firstName + user.profile.lastName;
-  // })
-
+  if (request.session.loggedIn === true) {
   User.findById(id).populate('posts').populate('friends').exec(function(err, user){
     var pageLoad = {
       ownPage: onOwnPage,
@@ -58,6 +56,9 @@ router.get('/:id', function(request, response) {
     }
     response.render("profile", pageLoad)
   })
+} else {
+  response.redirect("/users/login")
+}
 });
 
 
@@ -97,7 +98,11 @@ router.post('/', function(request, response){
         image: request.body.image
       }})
   user.save();
+    request.session.loggedIn = true;
+    request.session.sessionId = user.id;
+    request.session.userName = user.profile.firstName + " " + user.profile.lastName;
   response.send(user.id)
+
   })
 })
 
@@ -121,12 +126,23 @@ router.post('/friends/:id', function(request, response){
   var activeUserId = request.params.id;
   // var newFriendId = request.body.friendId;
   // console.log(newFriendId);
-  User.findById(activeUserId, function(error, user) {
-    var friendId = request.body.friendId;
-    user.friends.push(friendId);
-    user.save();
-    response.json(user);
+  User.update({_id: activeUserId}, {$addToSet: {friends: request.body.friendId}}, function(err, user) {
+    response.redirect('/users/' + activeUserId);
   })
-});
+    // var friendId = request.body.friendId;
+    // user.friends.push(friendId);
+    // user.save();
+    // response.json(user);
+  })
+// });
+
+router.delete('/:id', function(request, response) {
+  var id = request.params.id;
+  User.findById(id, function(err, user){
+    user.remove()
+    response.json('item removed');
+  })
+
+})
 
 module.exports = router;

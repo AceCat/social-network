@@ -1,49 +1,62 @@
-{{#if ownPage}}
-	<a href="/users/edit/{{user.id}}">Edit Profile</a>
-{{/if}}
-<img src="{{user.profile.image}}"/>
-{{#unless ownPage}}
-	<form action='/users/friends/{{session.sessionId}}' method='POST'>
-		<input name='friendId' value='{{user.id}}'>
-	<button>Add Friend</button>
-	</form>
-{{/unless}}
-<h2 id='profileName'>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
-<h3>{{user.profile.title}}</h3>
-<h3>{{user.profile.affiliation}}</h3>
-<br />
+<div class='container'>
 
-<h3>Interests</h3>
+	{{#if ownPage}}
+		<a href="/users/edit/{{user.id}}">Edit Profile</a>
+	{{/if}}
+	<div class='row'>
+		<div class='col-lg-3'>
+		<img src="{{user.profile.image}}"/>
+
+		</div>
+		<div class='col-lg-9'>
+			<h2 id='profileName'>{{user.profile.firstName}} {{user.profile.lastName}}</h2>
+			<h3>{{user.profile.title}}</h3>
+			<h3>{{user.profile.affiliation}}</h3>
+			{{#unless ownPage}}
+				<form action='/users/friends/{{session.sessionId}}' method='POST'>
+					<input name='friendId' value='{{user.id}}' hidden>
+					<button class='btn-success'>Add Friend</button>
+				</form>
+			{{/unless}}
+		</div>
+	</div>
+
+	<br />
+
+	<h3>Interests</h3>
+		<ul>
+			{{#each user.profile.interests}}
+			<li>{{this}}</li>
+			{{/each}}
+		</ul>
+
+	<h3>Write on this wall</h3>
+	<form action='/posts' method='POST'>
+		<input name='message'>
+		<input name='userId' value='{{user.id}}' hidden>
+		<input name='author' value='{{session.userName}}' hidden>
+		<input name='authorId' value='{{session.sessionId}}' hidden>
+		<button class='btn-primary'>Write</button>
+	</form>
+
+	<h2>Put another brick in THE WALL</h2>
 	<ul>
-		{{#each user.profile.interests}}
-		<li>{{this}}</li>
-		{{/each}}
+	{{#each user.posts}}
+		<li class="wallPost">
+		<h4><a href='/users/{{this.authorId}}'>{{this.author}}</a></h4>
+		<p>{{this.message}}</p>
+		</li>
+	{{/each}}
 	</ul>
 
-<h3>Write on this wall</h3>
-<form action='/posts' method='POST'>
-	<input name='message'>
-	<input name='userId' value='{{user.id}}' hidden>
-	<input name='author' value='{{session.userName}}' hidden>
-	<input name='authorId' value='{{session.sessionId}}'>
-	<button>Write</button>
-</form>
+	<h2>Friend List</h2>
+	<ol>
+	{{#each user.friends}}
 
-<h2>Put another brick in THE WALL</h2>
-<ul>
-{{#each user.posts}}
-	<li>
-	<h4><a href='/users/{{this.authorId}}'>{{this.author}}</a></h4>
-	<p>{{this.message}}</p>
-	</li>
-{{/each}}
-</ul>
+		<li>
+		<img class='friendImage' src="{{this.profile.image}}">
+		<a href='/users/{{this.id}}'>{{this.profile.firstName}} {{this.profile.lastName}}</a>
+		</li>
+	{{/each}}
 
-<h2>Yo dawg here's your friends</h2>
-<ol>
-{{#each user.friends}}
-
-	<li>
-	<a href='/users/{{this.id}}'>{{this.profile.firstName}} {{this.profile.lastName}}</a>
-	</li>
-{{/each}}
+</div>

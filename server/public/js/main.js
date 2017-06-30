@@ -74,14 +74,19 @@ submitButton.click(function(){
 	var title = $("#titleField").val();
 	var affiliation = $("#affiliationField").val();
 	var image = $("#imageField").val();
-	var interests = $(".interestField").val();
+	var interestsArray = [];
+	$(".interestField").each(function() {
+    	var text = $(this).val();
+    	interestsArray.push(text);
+	});
+	console.log(interestsArray);
 	var newProfileData = {
 		firstName: firstName,
 		lastName: lastName,
 		title: title,
 		affiliation: affiliation,
 		image: image,
-		interests: interests
+		interests: interestsArray
 	};
 	var pageUrl = document.URL; // Get current url
 	var urlArray = pageUrl.split('/') // Split the string into an array with / as separator
@@ -96,6 +101,8 @@ submitButton.click(function(){
 		}
 	})
 })
+
+
 
 // addFriendButton.click(function(){
 // 	console.log('clicked')

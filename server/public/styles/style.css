@@ -1,11 +1,36 @@
 body {
-	background-color: orange;
+	background-color: rbg(238,238,238);
 }
 
 img {
-
+	height: 250px;
+	width: 250px;
+	display: inline;
 }
 
 .interestField {
 	display: block;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+}
+
+.wallPost{
+
+}
+
+#custom-nav {
+}
+
+.friendImage {
+	height: 100px;
+	width: 100px;
+}
+
+.btn-success {
+	margin-top: 5px;
 }
