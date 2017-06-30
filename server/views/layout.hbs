@@ -12,12 +12,18 @@
 		<div class="navbar-header">
 			<a href="/users/" class="navbar-brand">Beast Coast</a>
 		</div>
-		    {{#if session.loggedIn}}
+	{{#if session.loggedIn}}
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/users/{{session.sessionId}}">Your Profile</a></li>
         <li><a href="/users/edit/{{session.sessionId}}">Edit Profile</a></li>
         <li><a href="/users/logout">Logout</a></li>
     {{/if}}
+    {{#unless session.loggedIn}}
+   		<ul class="nav navbar-nav navbar-right">
+   			<li><a href="/users/register">Register</a></li>
+    	</ul>
+
+    {{/unless}}
 </nav>
 
 
